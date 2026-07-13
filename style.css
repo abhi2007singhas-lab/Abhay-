@@ -1,0 +1,696 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Cinzel',serif;
+    background:#fffaf2;
+    color:#4b1d26;
+    overflow:hidden;
+}.welcome-screen{
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    padding:30px;
+
+    background:
+    radial-gradient(circle at top,#7a2638 0%,#3b0d18 45%,#17050a 100%);
+
+    color:#fff;
+}
+
+.small-text{
+    font-size:12px;
+    letter-spacing:4px;
+    margin-bottom:20px;
+}
+
+.welcome-screen h1{
+    font-family:'Great Vibes',cursive;
+    font-size:80px;
+    color:#d4af37;
+    font-weight:normal;
+}
+
+.welcome-screen h1 span{
+    color:#fff;
+    font-size:48px;
+}
+
+.invite-text{
+    margin-top:25px;
+    max-width:520px;
+    font-size:13px;
+    line-height:2;
+    letter-spacing:2px;
+}
+
+#openInvitation{
+    margin-top:45px;
+    padding:15px 40px;
+
+    border:2px solid #d4af37;
+    background:transparent;
+
+    color:#d4af37;
+
+    font-family:'Cinzel',serif;
+    letter-spacing:2px;
+
+    cursor:pointer;
+    transition:.4s;
+}
+
+#openInvitation:hover{
+    background:#d4af37;
+    color:#3b0d18;
+}
+
+/* ===========================
+   MAIN INVITATION
+=========================== */
+
+.main-invitation{
+
+    display:none;
+
+    width:100%;
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle,#fffdf8 0%,#f5ead2 100%);
+
+    text-align:center;
+
+    padding:80px 20px 100px;
+}
+
+.main-invitation.show{
+
+    display:block;
+
+    animation:fadeIn 1.2s ease;
+}
+
+.blessing{
+
+    color:#b8860b;
+
+    font-size:20px;
+
+    margin-bottom:40px;
+}
+
+.main-invitation h2{
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:75px;
+
+    color:#7a2638;
+
+    font-weight:normal;
+}
+
+.main-invitation h2 span{
+
+    color:#d4af37;
+}
+
+.wedding-text{
+
+    margin-top:20px;
+
+    font-size:13px;
+
+    letter-spacing:4px;
+}
+
+.wedding-date{
+
+    margin-top:40px;
+
+    color:#b8860b;
+
+    font-size:22px;
+
+    letter-spacing:3px;
+}
+
+/* ===========================
+   SCRATCH CARD
+=========================== */
+
+.scratch-card{
+
+    position:relative;
+
+    width:520px;
+
+    max-width:95%;
+
+    height:180px;
+
+    margin:60px auto;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    border:2px solid #d4af37;
+
+    background:#fffaf0;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.countdown{
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:center;
+}
+
+.time-box{
+
+    text-align:center;
+}
+
+.time-box span{
+
+    display:block;
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:42px;
+
+    color:#7a2638;
+}
+
+.time-box p{
+
+    margin-top:8px;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    color:#b8860b;
+}
+
+#scratchCanvas{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    z-index:10;
+
+    cursor:crosshair;
+
+    touch-action:none;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+    }
+}
+/* =====================================
+   WEDDING EVENTS
+===================================== */
+
+.events-section{
+    padding:90px 20px;
+    background:#fff8ef;
+}
+
+.events-small{
+    text-align:center;
+    color:#b8860b;
+    font-size:12px;
+    letter-spacing:4px;
+}
+
+.events-title{
+    text-align:center;
+    font-family:'Great Vibes',cursive;
+    font-size:65px;
+    font-weight:normal;
+    color:#7a2638;
+    margin:15px 0 60px;
+}
+
+.events-container{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:30px;
+}
+
+.event-card{
+
+    background:#ffffff;
+
+    border:2px solid #d4af37;
+
+    border-radius:20px;
+
+    padding:35px 25px;
+
+    text-align:center;
+
+    transition:.4s;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.event-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 40px rgba(122,38,56,.15);
+}
+
+.event-card h3{
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:34px;
+
+    color:#7a2638;
+
+    margin-bottom:18px;
+}
+
+.event-card p{
+
+    color:#8a6a21;
+
+    letter-spacing:1px;
+
+    font-size:15px;
+}
+
+/* =============================
+   MOBILE
+============================= */
+
+@media(max-width:768px){
+
+    .welcome-screen h1{
+        font-size:58px;
+    }
+
+    .main-invitation h2{
+        font-size:56px;
+    }
+
+    .events-title{
+        font-size:48px;
+    }
+
+    .scratch-card{
+        height:150px;
+    }
+
+    .time-box span{
+        font-size:30px;
+    }
+
+    .time-box p{
+        font-size:8px;
+    }
+
+    .event-card{
+        padding:28px 18px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .countdown{
+        gap:5px;
+    }
+
+    .time-box span{
+        font-size:24px;
+    }
+
+    .wedding-date{
+        font-size:16px;
+    }
+
+    .events-title{
+        font-size:42px;
+    }
+
+}
+/* ==========================
+   FAMILY SECTION
+========================== */
+
+.family-section{
+    padding:90px 20px;
+    background:#fffdf8;
+    text-align:center;
+}
+
+.family-small{
+    color:#b8860b;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.family-title{
+    font-family:'Great Vibes',cursive;
+    font-size:65px;
+    color:#7a2638;
+    font-weight:normal;
+    margin-bottom:60px;
+}
+
+.family-container{
+    max-width:1100px;
+    margin:auto;
+
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.family-card{
+    width:420px;
+    background:#fffaf0;
+    border:2px solid #d4af37;
+    border-radius:20px;
+    padding:40px 30px;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+    transition:.4s;
+}
+
+.family-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 18px 40px rgba(122,38,56,.15);
+}
+
+.family-card h3{
+    font-size:18px;
+    letter-spacing:2px;
+    color:#b8860b;
+    margin-bottom:18px;
+}
+
+.family-card h4{
+    font-family:'Great Vibes',cursive;
+    font-size:48px;
+    color:#7a2638;
+    font-weight:normal;
+    margin-bottom:15px;
+}
+
+.family-card p{
+    font-size:14px;
+    color:#666;
+    margin-bottom:15px;
+}
+
+.family-card h5{
+    font-size:22px;
+    color:#7a2638;
+    font-weight:600;
+    margin:8px 0;
+}
+
+@media(max-width:768px){
+
+    .family-title{
+        font-size:48px;
+    }
+
+    .family-card{
+        width:100%;
+    }
+
+    .family-card h4{
+        font-size:40px;
+    }
+
+}
+/* ==========================
+   VENUE SECTION
+========================== */
+
+.venue-section{
+    padding:90px 20px;
+    background:#fff8ef;
+    text-align:center;
+}
+
+.venue-small{
+    color:#b8860b;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.venue-title{
+    font-family:'Great Vibes',cursive;
+    font-size:65px;
+    color:#7a2638;
+    font-weight:normal;
+    margin-bottom:50px;
+}
+
+.venue-card{
+    max-width:700px;
+    margin:auto;
+    background:#fffaf0;
+    border:2px solid #d4af37;
+    border-radius:25px;
+    padding:45px 35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.10);
+}
+
+.venue-card h3{
+    color:#7a2638;
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.venue-address{
+    color:#666;
+    line-height:1.8;
+    font-size:16px;
+    margin-bottom:35px;
+}
+
+.map-btn{
+    display:inline-block;
+    padding:15px 35px;
+    background:#b8860b;
+    color:#fff;
+    text-decoration:none;
+    border-radius:50px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.map-btn:hover{
+    background:#7a2638;
+    transform:translateY(-3px);
+}
+
+@media(max-width:768px){
+
+    .venue-title{
+        font-size:48px;
+    }
+
+    .venue-card{
+        padding:30px 20px;
+    }
+
+    .venue-card h3{
+        font-size:24px;
+    }
+
+}
+.guest-message{
+    margin:20px 0 10px;
+    font-size:28px;
+    color:#7a2638;
+    font-weight:600;
+    text-align:center;
+}
+
+.guest-subtitle{
+    margin-bottom:35px;
+    font-size:16px;
+    color:#8b6b4a;
+    text-align:center;
+}
+/* ================= MUSIC BUTTON ================= */
+
+#musicBtn{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background: #b8860b;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    transition: .3s;
+}
+
+#musicBtn:hover{
+    transform: scale(1.1);
+}
+
+#musicBtn.playing{
+    animation: rotateMusic 3s linear infinite;
+}
+
+@keyframes rotateMusic{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+/* ===== Falling Flower Petals ===== */
+
+#petals{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:999;
+}
+
+.petal{
+    position:absolute;
+    top:-40px;
+    font-size:22px;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(-50px) rotate(0deg);
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(110vh) rotate(360deg);
+        opacity:.3;
+    }
+}.scratch-text {
+  position: relative;
+  color: #d4af37;
+  text-shadow:
+    0 0 5px #ffd700,
+    0 0 10px #ffd700,
+    0 0 18px #fff3a0;
+  animation: goldenGlow 1.5s infinite alternate;
+}
+
+@keyframes goldenGlow {
+  0% {
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  100% {
+    filter: brightness(1.8);
+    transform: scale(1.05);
+  }
+}
+/* GOLDEN SCRATCH SPARKLE */
+
+.golden-sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+
+    color: #ffd700;
+    font-size: 18px;
+
+    text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffcc00,
+        0 0 20px #fff4a3;
+
+    animation: goldenSparkle 0.8s ease-out forwards;
+}
+
+@keyframes goldenSparkle {
+    0% {
+        opacity: 1;
+        transform: scale(0.5) rotate(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(
+                calc(-20px + 40px * var(--random)),
+                -40px
+            )
+            scale(1.8)
+            rotate(180deg);
+    }
+}

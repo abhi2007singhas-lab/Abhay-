@@ -256,7 +256,24 @@ scratchArea.addEventListener("mousemove", function (e) {
         createGoldenSparkle(e.clientX, e.clientY);
     }
 });
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
+let musicPlaying = false;
+
+musicBtn.addEventListener("click", function () {
+    if (musicPlaying) {
+        music.pause();
+        musicBtn.innerHTML = "🎵";
+    } else {
+        music.play().catch(function(error){
+            console.log(error);
+        });
+        musicBtn.innerHTML = "🔊";
+    }
+
+    musicPlaying = !musicPlaying;
+});
 scratchArea.addEventListener("touchmove", function (e) {
     const touch = e.touches[0];
 

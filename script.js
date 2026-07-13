@@ -265,3 +265,61 @@ canvas.addEventListener("touchmove", function (e) {
         touch.clientY
     );
 });
+// ================= FIREWORKS =================
+
+const fwCanvas = document.getElementById("fireworks");
+const fwCtx = fwCanvas.getContext("2d");
+
+fwCanvas.width = window.innerWidth;
+fwCanvas.height = window.innerHeight;
+
+let fireworks = [];
+
+function createFirework() {
+    const x = Math.random() * fwCanvas.width;
+    const y = Math.random() * (fwCanvas.height / 2);
+
+    for (let i = 0; i < 50; i++) {
+        fireworks.push({
+            x: x,
+            y: y,
+            dx: (Math.random() - 0.5) * 8,
+            dy: (Math.random() - 0.5) * 8,
+            size: Math.random() * 3 + 1,
+            life: 100
+        });
+    }
+}
+
+function animateFireworks() {
+    fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+    for (let i = 0; i < fireworks.length; i++) {
+        let p = fireworks[i];
+
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life--;
+
+        fwCtx.beginPath();
+        fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        fwCtx.fillStyle = `hsl(${Math.random() * 360},100%,50%)`;
+        fwCtx.fill();
+
+        if (p.life <= 0) {
+            fireworks.splice(i, 1);
+            i--;
+        }
+    }
+
+    requestAnimationFrame(animateFireworks);
+}
+
+setInterval(createFirework, 1500);
+
+animateFireworks();
+
+window.addEventListener("resize", () => {
+    fwCanvas.width = window.innerWidth;
+    fwCanvas.height = window.innerHeight;
+});

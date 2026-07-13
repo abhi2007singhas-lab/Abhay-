@@ -1,5 +1,5 @@
 // ==============================
-// OPEN INVITATION
+// ELEMENTS
 // ==============================
 
 const openButton = document.getElementById("openInvitation");
@@ -9,30 +9,40 @@ const mainInvitation = document.getElementById("mainInvitation");
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
 
+const canvas = document.getElementById("scratchCanvas");
+const ctx = canvas.getContext("2d");
+
+const petals = document.getElementById("petals");
+
+let scratching = false;
 let musicPlaying = false;
 
+
+// ==============================
+// OPEN INVITATION
+// ==============================
+
 openButton.addEventListener("click", () => {
+
+    // Mobile ke liye direct click par music play
+    music.play().then(() => {
+        musicPlaying = true;
+        musicBtn.innerHTML = "🔊";
+        musicBtn.classList.add("playing");
+    }).catch((err) => {
+        console.log("Music blocked:", err);
+    });
 
     welcomeScreen.style.opacity = "0";
     welcomeScreen.style.transition = "opacity 1s ease";
 
     setTimeout(() => {
-
         welcomeScreen.style.display = "none";
         mainInvitation.classList.add("show");
 
         document.body.style.overflow = "auto";
 
         createScratchCard();
-
-        // Auto play music
-        music.play().then(() => {
-            musicPlaying = true;
-            musicBtn.innerHTML = "🔊";
-            musicBtn.classList.add("playing");
-        }).catch((error) => {
-            console.log(error);
-        });
 
     }, 1000);
 });
@@ -72,11 +82,6 @@ setInterval(updateCountdown, 1000);
 // SCRATCH CARD
 // ==============================
 
-const canvas = document.getElementById("scratchCanvas");
-const ctx = canvas.getContext("2d");
-
-let scratching = false;
-
 function createScratchCard() {
 
     canvas.width = canvas.parentElement.clientWidth;
@@ -99,7 +104,6 @@ function createScratchCard() {
 }
 
 function scratch(x, y) {
-
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
@@ -160,9 +164,11 @@ if (guest) {
 }
 
 
-// ================= MUSIC BUTTON =================
+// ==============================
+// MUSIC BUTTON
+// ==============================
 
-musicBtn.addEventListener("click", function () {
+musicBtn.addEventListener("click", () => {
 
     if (musicPlaying) {
 
@@ -170,21 +176,27 @@ musicBtn.addEventListener("click", function () {
         musicBtn.innerHTML = "🎵";
         musicBtn.classList.remove("playing");
 
+        musicPlaying = false;
+
     } else {
 
-        music.play();
+        music.play().then(() => {
 
-        musicBtn.innerHTML = "🔊";
-        musicBtn.classList.add("playing");
+            musicBtn.innerHTML = "🔊";
+            musicBtn.classList.add("playing");
+
+            musicPlaying = true;
+
+        }).catch((err) => {
+            console.log(err);
+        });
     }
-
-    musicPlaying = !musicPlaying;
 });
 
 
-// ===== Falling Flower Petals =====
-
-const petals = document.getElementById("petals");
+// ==============================
+// FLOWER PETALS
+// ==============================
 
 function createPetal() {
 
@@ -214,9 +226,9 @@ function createPetal() {
 setInterval(createPetal, 500);
 
 
-// ===== GOLDEN SPARKLE =====
-
-const scratchArea = document.getElementById("scratchCanvas");
+// ==============================
+// GOLDEN SPARKLES
+// ==============================
 
 function createGoldenSparkle(x, y) {
 
@@ -235,7 +247,7 @@ function createGoldenSparkle(x, y) {
     }, 800);
 }
 
-scratchArea.addEventListener("mousemove", function (e) {
+canvas.addEventListener("mousemove", function (e) {
     if (e.buttons === 1) {
         createGoldenSparkle(
             e.clientX,
@@ -244,7 +256,7 @@ scratchArea.addEventListener("mousemove", function (e) {
     }
 });
 
-scratchArea.addEventListener("touchmove", function (e) {
+canvas.addEventListener("touchmove", function (e) {
 
     const touch = e.touches[0];
 

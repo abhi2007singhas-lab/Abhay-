@@ -104,6 +104,7 @@ function createScratchCard() {
 }
 
 function scratch(x, y) {
+
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
@@ -111,9 +112,11 @@ function scratch(x, y) {
     ctx.fill();
 }
 
+
 canvas.addEventListener("mousedown", () => scratching = true);
 canvas.addEventListener("mouseup", () => scratching = false);
 canvas.addEventListener("mouseleave", () => scratching = false);
+
 
 canvas.addEventListener("mousemove", (e) => {
 
@@ -127,8 +130,10 @@ canvas.addEventListener("mousemove", (e) => {
     );
 });
 
+
 canvas.addEventListener("touchstart", () => scratching = true);
 canvas.addEventListener("touchend", () => scratching = false);
+
 
 canvas.addEventListener("touchmove", (e) => {
 
@@ -143,12 +148,16 @@ canvas.addEventListener("touchmove", (e) => {
         touch.clientX - rect.left,
         touch.clientY - rect.top
     );
-});
+
+}, { passive: false });
+
 
 window.addEventListener("resize", () => {
+
     if (mainInvitation.classList.contains("show")) {
         createScratchCard();
     }
+
 });
 
 
@@ -157,10 +166,24 @@ window.addEventListener("resize", () => {
 // ==============================
 
 const params = new URLSearchParams(window.location.search);
-const guest = params.get("name");
 
-if (guest) {
-    document.getElementById("guestName").textContent = guest;
+const guest = params.get("guest");
+
+const guestNameElement =
+    document.getElementById("guestName");
+
+if (guestNameElement) {
+
+    if (guest) {
+
+        guestNameElement.textContent = guest;
+
+    } else {
+
+        guestNameElement.textContent = "Guest";
+
+    }
+
 }
 
 
@@ -173,6 +196,7 @@ musicBtn.addEventListener("click", () => {
     if (musicPlaying) {
 
         music.pause();
+
         musicBtn.innerHTML = "🎵";
         musicBtn.classList.remove("playing");
 
@@ -188,9 +212,13 @@ musicBtn.addEventListener("click", () => {
             musicPlaying = true;
 
         }).catch((err) => {
+
             console.log(err);
+
         });
+
     }
+
 });
 
 
@@ -209,7 +237,9 @@ function createPetal() {
     petal.innerHTML =
         flowers[Math.floor(Math.random() * flowers.length)];
 
-    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.left =
+        Math.random() * 100 + "vw";
+
     petal.style.animationDuration =
         (5 + Math.random() * 5) + "s";
 
@@ -219,8 +249,11 @@ function createPetal() {
     petals.appendChild(petal);
 
     setTimeout(() => {
+
         petal.remove();
+
     }, 10000);
+
 }
 
 setInterval(createPetal, 500);
@@ -232,9 +265,12 @@ setInterval(createPetal, 500);
 
 function createGoldenSparkle(x, y) {
 
-    const sparkle = document.createElement("span");
+    const sparkle =
+        document.createElement("span");
 
-    sparkle.className = "golden-sparkle";
+    sparkle.className =
+        "golden-sparkle";
+
     sparkle.innerHTML = "✦";
 
     sparkle.style.left = x + "px";
@@ -243,18 +279,27 @@ function createGoldenSparkle(x, y) {
     document.body.appendChild(sparkle);
 
     setTimeout(() => {
+
         sparkle.remove();
+
     }, 800);
+
 }
 
+
 canvas.addEventListener("mousemove", function (e) {
+
     if (e.buttons === 1) {
+
         createGoldenSparkle(
             e.clientX,
             e.clientY
         );
+
     }
+
 });
+
 
 canvas.addEventListener("touchmove", function (e) {
 
@@ -264,62 +309,123 @@ canvas.addEventListener("touchmove", function (e) {
         touch.clientX,
         touch.clientY
     );
-});
-// ================= FIREWORKS =================
 
-const fwCanvas = document.getElementById("fireworks");
-const fwCtx = fwCanvas.getContext("2d");
+});
+
+
+// ==============================
+// FIREWORKS
+// ==============================
+
+const fwCanvas =
+    document.getElementById("fireworks");
+
+const fwCtx =
+    fwCanvas.getContext("2d");
+
 
 fwCanvas.width = window.innerWidth;
 fwCanvas.height = window.innerHeight;
 
+
 let fireworks = [];
 
+
 function createFirework() {
-    const x = Math.random() * fwCanvas.width;
-    const y = Math.random() * (fwCanvas.height / 2);
+
+    const x =
+        Math.random() * fwCanvas.width;
+
+    const y =
+        Math.random() * (fwCanvas.height / 2);
+
 
     for (let i = 0; i < 50; i++) {
+
         fireworks.push({
+
             x: x,
             y: y,
+
             dx: (Math.random() - 0.5) * 8,
             dy: (Math.random() - 0.5) * 8,
+
             size: Math.random() * 3 + 1,
+
             life: 100
+
         });
+
     }
+
 }
 
+
 function animateFireworks() {
-    fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+
+    fwCtx.clearRect(
+        0,
+        0,
+        fwCanvas.width,
+        fwCanvas.height
+    );
+
 
     for (let i = 0; i < fireworks.length; i++) {
+
         let p = fireworks[i];
 
         p.x += p.dx;
         p.y += p.dy;
+
         p.life--;
 
+
         fwCtx.beginPath();
-        fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        fwCtx.fillStyle = `hsl(${Math.random() * 360},100%,50%)`;
+
+        fwCtx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+        );
+
+        fwCtx.fillStyle =
+            `hsl(${Math.random() * 360},100%,50%)`;
+
         fwCtx.fill();
 
+
         if (p.life <= 0) {
+
             fireworks.splice(i, 1);
+
             i--;
+
         }
+
     }
 
-    requestAnimationFrame(animateFireworks);
+
+    requestAnimationFrame(
+        animateFireworks
+    );
+
 }
+
 
 setInterval(createFirework, 1500);
 
 animateFireworks();
 
+
 window.addEventListener("resize", () => {
-    fwCanvas.width = window.innerWidth;
-    fwCanvas.height = window.innerHeight;
+
+    fwCanvas.width =
+        window.innerWidth;
+
+    fwCanvas.height =
+        window.innerHeight;
+
 });

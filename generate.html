@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guest Invitation Link Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #5c0011, #b8860b);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .generator-box {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #8b0015;
+            font-size: 26px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .generate-btn {
+            background: #8b0015;
+            color: white;
+        }
+
+        .copy-btn {
+            background: #d4af37;
+            color: black;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+
+        #result {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #guestLink {
+            width: 100%;
+            min-height: 90px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="generator-box">
+
+        <h1>💍 Wedding Invitation</h1>
+
+        <p>Enter Guest Name</p>
+
+        <input
+            type="text"
+            id="guestName"
+            placeholder="Example: Ramesh Ji"
+        >
+
+        <button class="generate-btn" onclick="generateLink()">
+            Generate Invitation Link
+        </button>
+
+        <div id="result">
+
+            <textarea id="guestLink" readonly></textarea>
+
+            <button class="copy-btn" onclick="copyLink()">
+                📋 Copy Link
+            </button>
+
+            <button class="whatsapp-btn" onclick="shareWhatsApp()">
+                Share on WhatsApp
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let generatedLink = "";
+
+        function generateLink() {
+
+            const guestName =
+                document.getElementById("guestName").value.trim();
+
+            if (guestName === "") {
+
+                alert("Please enter guest name");
+
+                return;
+            }
+
+            const baseURL =
+                "https://abhi2007singhas-lab.github.io/Abhay-/";
+
+            generatedLink =
+                baseURL + "?guest=" + encodeURIComponent(guestName);
+
+            document.getElementById("guestLink").value =
+                generatedLink;
+
+            document.getElementById("result").style.display =
+                "block";
+        }
+
+
+        function copyLink() {
+
+            navigator.clipboard.writeText(generatedLink);
+
+            alert("Invitation Link Copied ✅");
+        }
+
+
+        function shareWhatsApp() {
+
+            const message =
+                "💐 You are cordially invited to our wedding celebration 💍\n\n" +
+                generatedLink;
+
+            const whatsappURL =
+                "https://wa.me/?text=" +
+                encodeURIComponent(message);
+
+            window.open(whatsappURL, "_blank");
+        }
+
+    </script>
+
+</body>
+
+</html>

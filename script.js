@@ -6,6 +6,11 @@ const openButton = document.getElementById("openInvitation");
 const welcomeScreen = document.querySelector(".welcome-screen");
 const mainInvitation = document.getElementById("mainInvitation");
 
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+
+let musicPlaying = false;
+
 openButton.addEventListener("click", () => {
 
     welcomeScreen.style.opacity = "0";
@@ -14,21 +19,22 @@ openButton.addEventListener("click", () => {
     setTimeout(() => {
 
         welcomeScreen.style.display = "none";
-
         mainInvitation.classList.add("show");
-music.play().catch(function(error){
-    console.log(error);
-});
 
-musicPlaying = true;
-musicBtn.innerHTML = "🔊";
-musicBtn.classList.add("playing");
         document.body.style.overflow = "auto";
 
         createScratchCard();
 
-    }, 1000);
+        // Auto play music
+        music.play().then(() => {
+            musicPlaying = true;
+            musicBtn.innerHTML = "🔊";
+            musicBtn.classList.add("playing");
+        }).catch((error) => {
+            console.log(error);
+        });
 
+    }, 1000);
 });
 
 
@@ -41,38 +47,27 @@ const weddingDate = new Date("November 20, 2026 00:00:00").getTime();
 function updateCountdown() {
 
     const now = new Date().getTime();
-
     const distance = weddingDate - now;
 
     if (distance <= 0) return;
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    document.getElementById("days").innerText =
+        Math.floor(distance / (1000 * 60 * 60 * 24));
 
-    const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) /
-        (1000 * 60 * 60)
-    );
+    document.getElementById("hours").innerText =
+        Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-    const minutes = Math.floor(
-        (distance % (1000 * 60 * 60)) /
-        (1000 * 60)
-    );
+    document.getElementById("minutes").innerText =
+        Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-    const seconds = Math.floor(
-        (distance % (1000 * 60)) /
-        1000
-    );
-
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
-
+    document.getElementById("seconds").innerText =
+        Math.floor((distance % (1000 * 60)) / 1000);
 }
 
 updateCountdown();
-
 setInterval(updateCountdown, 1000);
+
+
 // ==============================
 // SCRATCH CARD
 // ==============================
@@ -84,20 +79,18 @@ let scratching = false;
 
 function createScratchCard() {
 
-    // Canvas size = scratch card size
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
 
-    // Golden layer
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = "#c89b3c";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Scratch text
     ctx.fillStyle = "#ffffff";
     ctx.font = "bold 22px Cinzel";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+
     ctx.fillText(
         "✦ SCRATCH HERE ✦",
         canvas.width / 2,
@@ -112,14 +105,10 @@ function scratch(x, y) {
     ctx.beginPath();
     ctx.arc(x, y, 25, 0, Math.PI * 2);
     ctx.fill();
-
 }
 
-// Mouse Events
 canvas.addEventListener("mousedown", () => scratching = true);
-
 canvas.addEventListener("mouseup", () => scratching = false);
-
 canvas.addEventListener("mouseleave", () => scratching = false);
 
 canvas.addEventListener("mousemove", (e) => {
@@ -132,12 +121,9 @@ canvas.addEventListener("mousemove", (e) => {
         e.clientX - rect.left,
         e.clientY - rect.top
     );
-
 });
 
-// Touch Events
 canvas.addEventListener("touchstart", () => scratching = true);
-
 canvas.addEventListener("touchend", () => scratching = false);
 
 canvas.addEventListener("touchmove", (e) => {
@@ -147,36 +133,34 @@ canvas.addEventListener("touchmove", (e) => {
     if (!scratching) return;
 
     const rect = canvas.getBoundingClientRect();
-
     const touch = e.touches[0];
 
     scratch(
         touch.clientX - rect.left,
         touch.clientY - rect.top
     );
-
 });
 
-// Resize Fix
 window.addEventListener("resize", () => {
-
     if (mainInvitation.classList.contains("show")) {
         createScratchCard();
     }
-
 });
+
+
+// ==============================
+// GUEST NAME
+// ==============================
+
 const params = new URLSearchParams(window.location.search);
 const guest = params.get("name");
 
 if (guest) {
     document.getElementById("guestName").textContent = guest;
 }
-// ================= MUSIC =================
 
-const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
 
-let musicPlaying = false;
+// ================= MUSIC BUTTON =================
 
 musicBtn.addEventListener("click", function () {
 
@@ -188,54 +172,54 @@ musicBtn.addEventListener("click", function () {
 
     } else {
 
-        music.play().catch(function(error){
-            console.log(error);
-        });
+        music.play();
 
         musicBtn.innerHTML = "🔊";
         musicBtn.classList.add("playing");
-
     }
 
     musicPlaying = !musicPlaying;
-
 });
+
+
 // ===== Falling Flower Petals =====
 
 const petals = document.getElementById("petals");
 
-function createPetal(){
+function createPetal() {
 
     const petal = document.createElement("div");
 
     petal.classList.add("petal");
 
-    const flowers = ["🌸","🌺","🌼","💮"];
+    const flowers = ["🌸", "🌺", "🌼", "💮"];
 
-    petal.innerHTML = flowers[Math.floor(Math.random()*flowers.length)];
+    petal.innerHTML =
+        flowers[Math.floor(Math.random() * flowers.length)];
 
-    petal.style.left = Math.random()*100 + "vw";
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDuration =
+        (5 + Math.random() * 5) + "s";
 
-    petal.style.animationDuration = (5 + Math.random()*5) + "s";
-
-    petal.style.fontSize = (18 + Math.random()*18) + "px";
+    petal.style.fontSize =
+        (18 + Math.random() * 18) + "px";
 
     petals.appendChild(petal);
 
-    setTimeout(()=>{
+    setTimeout(() => {
         petal.remove();
-    },10000);
-
+    }, 10000);
 }
 
-setInterval(createPetal,500);
-console.log("Petal script loaded");
-console.log("Petal script is running");
-// GOLDEN SPARKLE EFFECT ON SCRATCH
+setInterval(createPetal, 500);
+
+
+// ===== GOLDEN SPARKLE =====
 
 const scratchArea = document.getElementById("scratchCanvas");
 
 function createGoldenSparkle(x, y) {
+
     const sparkle = document.createElement("span");
 
     sparkle.className = "golden-sparkle";
@@ -253,28 +237,15 @@ function createGoldenSparkle(x, y) {
 
 scratchArea.addEventListener("mousemove", function (e) {
     if (e.buttons === 1) {
-        createGoldenSparkle(e.clientX, e.clientY);
+        createGoldenSparkle(
+            e.clientX,
+            e.clientY
+        );
     }
 });
-const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
 
-let musicPlaying = false;
-
-musicBtn.addEventListener("click", function () {
-    if (musicPlaying) {
-        music.pause();
-        musicBtn.innerHTML = "🎵";
-    } else {
-        music.play().catch(function(error){
-            console.log(error);
-        });
-        musicBtn.innerHTML = "🔊";
-    }
-
-    musicPlaying = !musicPlaying;
-});
 scratchArea.addEventListener("touchmove", function (e) {
+
     const touch = e.touches[0];
 
     createGoldenSparkle(
